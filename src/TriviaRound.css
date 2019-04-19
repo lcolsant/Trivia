@@ -1,0 +1,17 @@
+
+.AnswerDiv {
+    margin-left: 40px;
+}
+
+
+button {
+    background-color:#282c34;
+    color:  #61dafb;
+    width: 150px;
+    height: 75px;
+    border: 3px solid #61dafb;;
+    border-radius: 10px;
+    cursor: pointer;
+
+
+}
