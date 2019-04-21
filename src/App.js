@@ -97,7 +97,6 @@ nextQuestion(){
 
   render() {
 
-      // console.log(`submitted is ${this.state.submitted}`)
       let isCorrect;
 
       if (this.state.correct){
