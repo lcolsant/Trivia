@@ -36,7 +36,8 @@ class App extends Component {
     this.state = {
       start_time: new Date().getTime(),
       elapsed: 0,
-      question: testQuestion.description + ' (Click for hint: -5 pts)',
+      // question: testQuestion.description + ' (Click for hint: -5 pts)',
+      question: testQuestion.description,
       answers: testQuestion.answers,
       score: 0,
       submitted: false,
@@ -60,9 +61,9 @@ updateScore(name){
   this.setState({submitted: true})
   console.log(`You have selected ${name.value}!`);
 
-  if(name.isCorrect == true ){
+  if(name.isCorrect === true ){
     
-    if(this.state.hint == false){
+    if(this.state.hint === false){
       this.setState( (priorState)=>({
         score: priorState.score + 10,
         correct: true
@@ -77,6 +78,8 @@ updateScore(name){
   }
 }
 
+
+//this function is used if hints are allowed.
 giveHint(){
   this.setState({
     
@@ -96,7 +99,6 @@ nextQuestion(){
 
 
   render() {
-
       let isCorrect;
 
       if (this.state.correct){
@@ -113,12 +115,15 @@ nextQuestion(){
            <button onClick={()=> this.nextQuestion()}>Next Question</button>
           </div>
       }else{
-          button_group = 
-            <div className="Answers">
-              <TriviaRound name={this.state.answers[0]}  onClick={ (name)=> this.updateScore(name)}/>
-              <TriviaRound name={this.state.answers[1]}  onClick={ (name)=> this.updateScore(name)}/>
-              <TriviaRound name={this.state.answers[2]}  onClick={ (name)=> this.updateScore(name)}/>
-            </div>
+        button_group = 
+        <div className="Answers">
+            {/* for(let i=0; i<this.state.answers.length; i++){ */}
+                <TriviaRound name={this.state.answers[0]}  onClick={ (name)=> this.updateScore(name)}/>
+                <TriviaRound name={this.state.answers[1]}  onClick={ (name)=> this.updateScore(name)}/>
+                <TriviaRound name={this.state.answers[2]}  onClick={ (name)=> this.updateScore(name)}/>
+              {/* } */}
+        </div>
+
       }
 
     return (
@@ -128,9 +133,13 @@ nextQuestion(){
           <p id="score">Your Score: {this.state.score}</p>
           <p id="timer">Timer: {this.state.elapsed}</p>
         </div>
-        <button className="Question" onClick={()=>this.giveHint()}>
+  
+        {/* <button className="Question" onClick={()=>this.giveHint()}>
           {this.state.question}
-        </button>
+        </button> */}
+        <div className="Question">
+          {this.state.question}
+        </div>
         
           <h4>Select your answer:</h4>
           <div>{button_group}</div>

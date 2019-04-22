@@ -20,7 +20,7 @@
 }
 
 .Question {
-  height: 150px;
+  /* height: 150px; */
   width: 400px;
   border: 3px solid #61dafb;
   margin: 0 auto;
@@ -28,7 +28,6 @@
   font-size: calc(5px + 2vmin);
   /* background-color: #ffffff; */
   
-
 }
 
 .Scoreboard {
@@ -42,15 +41,21 @@
 
 #timer{
   color: #ff4753;
-  display: inline;
+  display: inline-block;
   margin: 10px;
+  padding: 10px;
+  width: 160px;
+  text-align: left;
+
 }
 
 #score {
   font-weight: 400;
   color: #42f465;
-  display: inline;
+  display: inline-block;
   margin: 10px;
+  padding: 10px;
+  width: 160px;
 
 
 }
