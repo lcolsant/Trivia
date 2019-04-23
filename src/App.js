@@ -1,34 +1,9 @@
 import React, { Component } from 'react';
 import './App.css';
 import TriviaRound from './TriviaRound';
+import testQuestion from './TestQuestions';
 
-
-const testQuestion = {
-  "questionId": 1,
-  "description": "What player holds the career record for most stolen bases?",
-  "hint": "This player stole a single season record of 130 bases in 1983 as a member of the Oakland Athetics",
-  "topicId": 1,
-  "answers": [
-    {
-      "answerId": 1,
-      "value": "Rickey Henderson",
-      "questionId": 1,
-      "isCorrect": true
-    },
-    {
-      "answerId": 2,
-      "value": "Wade Boggs",
-      "questionId": 1,
-      "isCorrect": false
-    },
-    {
-      "answerId": 3,
-      "value": "Willie Mays Hayes",
-      "questionId": 1,
-      "isCorrect": false
-    }
-  ]
-};
+let i=0;
 
 class App extends Component {
   constructor(props){
@@ -37,12 +12,13 @@ class App extends Component {
       start_time: new Date().getTime(),
       elapsed: 0,
       // question: testQuestion.description + ' (Click for hint: -5 pts)',
-      question: testQuestion.description,
-      answers: testQuestion.answers,
+      question: testQuestion[i].description,
+      answers: testQuestion[i].answers,
       score: 0,
       submitted: false,
       correct: false,
-      hint: false
+      hint: false,
+      testLength: testQuestion.length
       
     }
   }
@@ -58,6 +34,9 @@ componentWillMount(){
 
 updateScore(name){
   
+  i = i+1;
+  console.log(`in updateScore...i=: ${i}`)
+
   this.setState({submitted: true})
   console.log(`You have selected ${name.value}!`);
 
@@ -74,7 +53,6 @@ updateScore(name){
         correct: true
       }))
     }
-    
   }
 }
 
@@ -82,7 +60,6 @@ updateScore(name){
 //this function is used if hints are allowed.
 giveHint(){
   this.setState({
-    
     question: testQuestion.hint,
     hint: true,
 
@@ -90,7 +67,10 @@ giveHint(){
 }
 
 nextQuestion(){
+  
   this.setState({
+    question: testQuestion[i].description,
+    answers: testQuestion[i].answers,
     submitted: false,
     correct: false,
     hint: false
@@ -108,7 +88,16 @@ nextQuestion(){
       }
       let button_group;
 
-      if(this.state.submitted){
+      if(this.state.submitted && i===testQuestion.length){
+         button_group = 
+          <div>
+           <p>Your answer is: {isCorrect}!</p>
+           <p>Your final score is: {this.state.score} out of {10*this.state.testLength} points possible!</p>
+           <button onClick={()=> window.location.reload()}>Play Again</button>
+
+           {/* <button onClick={()=> this.nextQuestion()}>Next Question</button> */}
+          </div>
+      }else if(this.state.submitted && i<testQuestion.length){
          button_group = 
           <div>
            <p>Your answer is: {isCorrect}!</p>
@@ -117,11 +106,10 @@ nextQuestion(){
       }else{
         button_group = 
         <div className="Answers">
-            {/* for(let i=0; i<this.state.answers.length; i++){ */}
                 <TriviaRound name={this.state.answers[0]}  onClick={ (name)=> this.updateScore(name)}/>
                 <TriviaRound name={this.state.answers[1]}  onClick={ (name)=> this.updateScore(name)}/>
                 <TriviaRound name={this.state.answers[2]}  onClick={ (name)=> this.updateScore(name)}/>
-              {/* } */}
+                <TriviaRound name={this.state.answers[3]}  onClick={ (name)=> this.updateScore(name)}/>
         </div>
 
       }

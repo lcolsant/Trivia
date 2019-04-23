@@ -5,13 +5,15 @@
 
 
 button {
-    background-color:#282c34;
-    color:  #61dafb;
+    /* background-color:#282c34; */
+    background-color:#61dafb;
+    color:  #282c34;
     width: 150px;
     height: 75px;
-    border: 3px solid #61dafb;;
+    border: 3px solid #282c34;
     border-radius: 10px;
     cursor: pointer;
+    font-weight: bold;
 
 
 }
