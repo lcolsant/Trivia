@@ -4,6 +4,7 @@ import TriviaRound from './TriviaRound';
 import testQuestion from './TestQuestions';
 
 let i=0;
+let timer;
 
 class App extends Component {
   constructor(props){
@@ -11,6 +12,7 @@ class App extends Component {
     this.state = {
       start_time: new Date().getTime(),
       elapsed: 0,
+      penalty: false,
       // question: testQuestion.description + ' (Click for hint: -5 pts)',
       question: testQuestion[i].description,
       answers: testQuestion[i].answers,
@@ -24,11 +26,15 @@ class App extends Component {
   }
   
 componentWillMount(){
-    setInterval( ()=>{
+      timer = setInterval( ()=>{
       let end_time = new Date().getTime();
       let elapsed_time = Math.floor(((end_time-this.state.start_time)/1000));
       this.setState({elapsed: elapsed_time})
     },1000)
+}
+
+componentWillUnmount(){
+  clearInterval(timer);
 }
 
 
@@ -58,13 +64,13 @@ updateScore(name){
 
 
 //this function is used if hints are allowed.
-giveHint(){
-  this.setState({
-    question: testQuestion.hint,
-    hint: true,
+// giveHint(){
+//   this.setState({
+//     question: testQuestion.hint,
+//     hint: true,
 
-  })
-}
+//   })
+// }
 
 nextQuestion(){
   
@@ -77,22 +83,43 @@ nextQuestion(){
   })
 }
 
+clearTimer(){
+  clearInterval(timer);
+  // console.log(`you took: ${this.state.elapsed} seconds`)
+}
+
+calcScore(){
+
+  console.log(`in calcScore`)
+  if(this.state.elapsed>60){
+
+    return Math.max( (this.state.score-5),0);
+  
+  }else{
+    return this.state.score
+  }
+}
+
 
   render() {
       let isCorrect;
-
+      
       if (this.state.correct){
         isCorrect = 'correct'
       }else{
         isCorrect = 'incorrect'
       }
       let button_group;
-
+      
       if(this.state.submitted && i===testQuestion.length){
+        console.log(`reached the end`)
+        this.clearTimer();
          button_group = 
           <div>
            <p>Your answer is: {isCorrect}!</p>
-           <p>Your final score is: {this.state.score} out of {10*this.state.testLength} points possible!</p>
+           <p>Your final score is: {this.calcScore()} out of {10*this.state.testLength} points possible!</p>
+           {/* <p>You took {this.state.elapsed} seconds.</p> */}
+           <p>{this.state.elapsed>60 ? 'You received a 5 pt penalty for exceeding 60 seconds.':''}</p>
            <button onClick={()=> window.location.reload()}>Play Again</button>
 
            {/* <button onClick={()=> this.nextQuestion()}>Next Question</button> */}
