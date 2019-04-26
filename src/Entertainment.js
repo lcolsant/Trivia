@@ -5,12 +5,12 @@ const entertainmentQs = [
       "description": "What was the title of the first Bond movie, released in 1962?",
       "answers": [
         {
-          "value": "Dr. No",
-          "isCorrect": true
-        },
-        {
           "value": "From Russia with Love",
           "isCorrect": false
+        },
+        {
+            "value": "Dr. No",
+            "isCorrect": true
         },
         {
           "value": "Goldfinger",
@@ -72,12 +72,12 @@ const entertainmentQs = [
             "isCorrect": false
         },
         {
-            "value": "Harry Potter",
-            "isCorrect": true
-        },
-        {
             "value": "Spy Kids",
             "isCorrect": false
+        },
+        {
+            "value": "Harry Potter",
+            "isCorrect": true
         },
         {
             "value": "Pirates of the Caribbean",
@@ -97,12 +97,12 @@ const entertainmentQs = [
             "isCorrect": false
         },
         {
-            "value": "Tim Burton",
-            "isCorrect": false
-        },
-        {
             "value": "Steven Spielberg",
             "isCorrect": true
+        },
+        {
+            "value": "Tim Burton",
+            "isCorrect": false
         },
       ]
     },

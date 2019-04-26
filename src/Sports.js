@@ -1,6 +1,6 @@
 // import React, { Component } from 'react';
 
-const testQuestion = [
+const sportsQs = [
     {
       "description": "Which country is hosted the 2018 FIFA World Cup?",
       "answers": [
@@ -109,4 +109,4 @@ const testQuestion = [
   
   ];
 
-export default testQuestion;
+export default sportsQs;
