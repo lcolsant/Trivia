@@ -18,10 +18,8 @@ class App extends Component {
       start_time: new Date().getTime(),
       elapsed: 0,
       penalty: false,
-      // question: question[i].description,
-      // answers: question[i].answers,
       question: null,
-      answers: 5,
+      answers: '',
       score: 0,
       submitted: false,
       correct: false,
@@ -36,63 +34,49 @@ class App extends Component {
 
   }
   
-componentWillMount(){
-    //   timer = setInterval( ()=>{
-    //   let end_time = new Date().getTime();
-    //   let elapsed_time = Math.floor(((end_time-this.state.start_time)/1000));
-    //   this.setState({elapsed: elapsed_time})
-    // },1000)
-}
+// componentWillMount(){
+//       timer = setInterval( ()=>{
+//       let end_time = new Date().getTime();
+//       let elapsed_time = Math.floor(((end_time-this.state.start_time)/1000));
+//       this.setState({elapsed: elapsed_time})
+//     },1000)
+// }
 
-componentWillUnmount(){
-  clearInterval(timer);
-}
+// componentWillUnmount(){
+//   clearInterval(timer);
+// }
 
-
-updateScore(name){
+//update count to next question and add 10 pts if answer is correct
+updateScore(answer){
   
   i = i+1;
 
   this.setState({submitted: true})
-  console.log(`You have selected ${name.value}!`);
+  console.log(`You have selected ${answer.value}!`);
 
-  if(name.isCorrect === true ){
+  if(answer.isCorrect === true ){
     
-    if(this.state.hint === false){
       this.setState( (priorState)=>({
         score: priorState.score + 10,
         correct: true
       }))
-    }else{
-      this.setState( (priorState)=>({
-        score: priorState.score + 5,
-        correct: true
-      }))
-    }
   }
 }
 
+//called if user selects to play another round; all state variables are reset to the initial state
 playAgain(){
   i=0
   this.setState(this.initialState);
 }
 
+//update state to reflect next question and answer is array.
 nextQuestion(){
-
-  if (this.state.catagory === "Sports"){
-    question = sportsQs;
-  }else if(this.state.catagory === "Entertainment"){
-    question = entertainmentQs;
-  }else{
-    question = scienceQs;
-  }
   
   this.setState({
     question: question[i].description,
     answers: question[i].answers,
     submitted: false,
     correct: false,
-    hint: false
   })
 }
 
@@ -115,6 +99,7 @@ selectCatagory(catagory){
 
   console.log(`You have selected ${catagory}`)
 
+  //select trivia array of questions based on user selection
   if (catagory === "Sports"){
     question = sportsQs;
   }else if(catagory === "Entertainment"){
@@ -123,6 +108,7 @@ selectCatagory(catagory){
     question = scienceQs;
   }
 
+  //update state to reflect chosen category and define start time
   this.setState({
     iscatagory: true,
     catagory: catagory,
@@ -133,7 +119,7 @@ selectCatagory(catagory){
 
   })
 
-
+  //start clock after user selects category
   timer = setInterval( ()=>{
     let end_time = new Date().getTime();
     let elapsed_time = Math.floor(((end_time-this.state.start_time)/1000));
@@ -153,8 +139,11 @@ selectCatagory(catagory){
       }
       let button_group;
       
+      //the following block executes after the last question is reached for each round
       if(this.state.submitted && i===this.state.testLength){
+        //stop timer
         this.clearTimer(timer);
+      //define button group to display final score, determine penalty (if any), and offer to play another round
          button_group = 
           <div>
             <p>Your answer is: {isCorrect}!</p>
@@ -163,6 +152,7 @@ selectCatagory(catagory){
             <button onClick={()=> this.playAgain()}>Play Again</button>
           </div>
       }else if(this.state.submitted && i<this.state.question.length){
+        //button group if final question hasn't been reached. Call nextQuestion function
          button_group = 
           <div>
              <p>Your answer is: {isCorrect}!</p>
@@ -171,10 +161,10 @@ selectCatagory(catagory){
       }else{
         button_group = 
         <div className="Answers">
-            <TriviaRound name={this.state.answers[0]}  onClick={ (name)=> this.updateScore(name)}/>
-            <TriviaRound name={this.state.answers[1]}  onClick={ (name)=> this.updateScore(name)}/>
-            <TriviaRound name={this.state.answers[2]}  onClick={ (name)=> this.updateScore(name)}/>
-            <TriviaRound name={this.state.answers[3]}  onClick={ (name)=> this.updateScore(name)}/>
+            <TriviaRound answer={this.state.answers[0]}  onClick={ (answer)=> this.updateScore(answer)}/>
+            <TriviaRound answer={this.state.answers[1]}  onClick={ (answer)=> this.updateScore(answer)}/>
+            <TriviaRound answer={this.state.answers[2]}  onClick={ (answer)=> this.updateScore(answer)}/>
+            <TriviaRound answer={this.state.answers[3]}  onClick={ (answer)=> this.updateScore(answer)}/>
         </div>
 
       }
@@ -183,6 +173,7 @@ selectCatagory(catagory){
       <div className="App">
         <h2>TriviaRound</h2>
           <div>
+          {/* display categories if user has not yet at beginning of the round */}
           { !iscatagory ?
             <React.Fragment>
               <p>Select Trivia Catagory:</p>
@@ -192,6 +183,7 @@ selectCatagory(catagory){
             </React.Fragment>: null
           }
           </div>
+          {/* after user selects category; iscatagory will be set to true and the trivia round will begin */}
           { iscatagory ? 
             <React.Fragment>
             <div className="Soreboard">

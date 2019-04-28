@@ -5,13 +5,10 @@ import './TriviaRound.css';
 
 
 class TriviaRound extends Component {
-    constructor(props){
-        super(props);
-    }
     render() {
       return (
         <div className="AnswerDiv">
-            <button onClick={ ()=> this.props.onClick(this.props.name) }>{this.props.name.value}</button>
+            <button onClick={ ()=> this.props.onClick(this.props.answer) }>{this.props.answer.value}</button>
         </div>
       );
     }
