@@ -33,18 +33,7 @@ class App extends Component {
     this.initialState = this.state;
 
   }
-  
-// componentWillMount(){
-//       timer = setInterval( ()=>{
-//       let end_time = new Date().getTime();
-//       let elapsed_time = Math.floor(((end_time-this.state.start_time)/1000));
-//       this.setState({elapsed: elapsed_time})
-//     },1000)
-// }
 
-// componentWillUnmount(){
-//   clearInterval(timer);
-// }
 
 //update count to next question and add 10 pts if answer is correct
 updateScore(answer){
